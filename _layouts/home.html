@@ -3,13 +3,29 @@ layout: default
 ---
 
 <div class="home">
-  {%- if page.title -%}
-    <h1 class="page-heading">{{ page.title }}</h1>
-  {%- endif -%}
+    <div class="row">
+        <div class="col-4 col-s-12">
+            <div class="responsive profile-border-top">
+                <img
+                    class="profile cover"
+                    src="{{
+                site.picture_profile }}"
+                />
+            </div>
+        </div>
 
-  {{ content }}
+        <div class="col-8 col-s-12">
+            {%- if page.title -%}
+            <h1 class="page-heading"><strong>{{ page.title }}</strong></h1>
+            {%- endif -%} 
+            {%- if page.subtitle -%}
+            <h1 class="page-sub-heading">{{ page.subtitle }}</h1>
+            {%- endif -%} 
+            <p>{{ content }}</p>
+        </div>
+    </div>
 
-  <!--
+    <!--
   {%- if site.posts.size > 0 -%}
     <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
     <ul class="post-list">
@@ -33,5 +49,4 @@ layout: default
   {%- endif -%}
 
   -->
-
 </div>

@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: giovamuge
+title: Giovanni Mugelli
 email: mugelli.giovanni@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Giovani Mugelli, freelance software developer per flutter, angular, react, .net core, c#
@@ -31,6 +31,9 @@ twitter_username: giovamuge
 github_username:  giovamuge
 instagram_username: giovamuge
 youtube_username: giovamuge
+
+
+picture_profile: assets/profile.jpeg
 
 
 # Build settings

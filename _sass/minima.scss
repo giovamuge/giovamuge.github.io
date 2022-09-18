@@ -3,11 +3,11 @@
 // Define defaults for each variable.
 
 // import from sever google remote
-@import url('https://fonts.googleapis.com/css?family=Space%20Mono&display=swap');
-@import url('https://fonts.googleapis.com/css?family=League%20Spartan&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Space%20Mono&display=swap");
+@import url("https://fonts.googleapis.com/css?family=League%20Spartan&display=swap");
 
 // import from local assets
-// 
+//
 // @font-face {
 //   font-family: 'Space Mono';
 //   src: url('/assets/SpaceMono-Bold.ttf');
@@ -33,29 +33,42 @@
 // }
 
 //$base-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
-$base-font-family: 'League Spartan';
-$base-font-size:   16px !default;
+$base-font-family: "League Spartan", sans-serif;
+$base-font-size: 16px !default;
 $base-font-weight: 400 !default;
-$small-font-size:  $base-font-size * 0.875 !default;
+$small-font-size: $base-font-size * 0.875 !default;
 $base-line-height: 1.5 !default;
 
-$spacing-unit:     30px !default;
+$spacing-unit: 30px !default;
 
-$text-color:       #DCF763 !default;
-$background-color: #435058 !default;
-$brand-color:      #EE6123 !default;
+$lime: #dcf763;
+$carbon: #435058;
+$argent: #D1CCDC;
 
-$grey-color:       #2D936C !default;
+$text-color: $lime !default;
+$background-color: $carbon !default;
+$brand-color: $lime !default; // alternative brand color #EE964B 
+
+
+// $alpha: #a085c6;
+// $beta: #ede6d5;
+// $gama: #fcd174;#F5EDF0
+
+$grey-color: $argent !default;
 $grey-color-light: lighten($grey-color, 40%) !default;
-$grey-color-dark:  darken($grey-color, 25%) !default;
+$grey-color-dark: darken($grey-color, 25%) !default;
 
 $table-text-align: left !default;
 
 // Width of the content area
-$content-width:    800px !default;
+$content-width: 800px !default;
 
-$on-palm:          600px !default;
-$on-laptop:        800px !default;
+$on-palm: 600px !default;
+$on-laptop: 800px !default;
+
+$above: "only screen and (min-width: 600px)";
+$below: "only screen and (max-width: 600px)";
+$small: "only screen and (max-width: 400px)";
 
 // Use media queries like this:
 // @include media-query($on-palm) {
@@ -65,18 +78,14 @@ $on-laptop:        800px !default;
 //   }
 // }
 @mixin media-query($device) {
-  @media screen and (max-width: $device) {
-    @content;
-  }
+    @media screen and (max-width: $device) {
+        @content;
+    }
 }
 
 @mixin relative-font-size($ratio) {
-  font-size: $base-font-size * $ratio;
+    font-size: $base-font-size * $ratio;
 }
 
 // Import partials.
-@import
-  "minima/base",
-  "minima/layout",
-  "minima/syntax-highlighting"
-;
+@import "minima/base", "minima/layout", "minima/syntax-highlighting";
