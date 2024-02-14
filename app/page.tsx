@@ -18,30 +18,30 @@ export default function Home() {
 	// const morePosts = allPosts.slice(1);
 
 	// @ts-ignore
-	const projects: [
-		{
-			title: string
-			tags: Array<string>
-			description: string
-			image: string | StaticImageData
-			url?: string | undefined
-		}
-	] = [
-		{
-			title: "Giovanni Mugelli",
-			tags: ["portfolio", "website"],
-			description: "Portfolio of Giovanni Mugelli",
-			image: profile,
-			url: "https://giovamuge.dev",
-		},
-		{
-			title: "Giovanni Mugelli",
-			tags: ["portfolio", "website"],
-			description: "Portfolio of Giovanni Mugelli",
-			image: profile,
-			url: "https://giovamuge.dev",
-		},
-	]
+	// const projects: [
+	// 	{
+	// 		title: string
+	// 		tags: Array<string>
+	// 		description: string
+	// 		image: string | StaticImageData
+	// 		url?: string | undefined
+	// 	}
+	// ] = [
+	// 	{
+	// 		title: "Giovanni Mugelli",
+	// 		tags: ["portfolio", "website"],
+	// 		description: "Portfolio of Giovanni Mugelli",
+	// 		image: profile,
+	// 		url: "https://giovamuge.dev",
+	// 	},
+	// 	{
+	// 		title: "Giovanni Mugelli",
+	// 		tags: ["portfolio", "website"],
+	// 		description: "Portfolio of Giovanni Mugelli",
+	// 		image: profile,
+	// 		url: "https://giovamuge.dev",
+	// 	},
+	// ]
 
 	return (
 		<>
