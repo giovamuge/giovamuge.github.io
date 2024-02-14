@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css?family=Space%20Mono&display=swap");
+@import url("https://fonts.googleapis.com/css?family=League%20Spartan&display=swap");
+
+:root {
+	--foreground-rgb: rgb(0, 0, 0);
+	--background-start-rgb: rgb(214, 219, 220);
+	--background-end-rgb: rgb(255, 255, 255);
+	--background-rgb: rgb(67, 80, 88);
+	--primary-rgb: rgb(220, 247, 99);
+	--secondary-rgb: rgb(209, 204, 220);
+}
+
+/** TODO: Enable dark mode when it's ready */
+
+/* Dark mode */
+/* @media (prefers-color-scheme: dark) {
+	:root {
+		--foreground-rgb: 255, 255, 255;
+		--background-start-rgb: 0, 0, 0;
+		--background-end-rgb: 0, 0, 0;
+		--background-rgb: 209, 204, 220;
+		--primary-rgb: 220, 247, 99;
+		--secondary-rgb: 67, 80 88;
+	}
+} */
+
+body {
+	color: var(--primary-rgb);
+	background-color: var(--background-rgb);
+}
+
+@layer utilities {
+	.text-balance {
+		text-wrap: balance;
+	}
+}
+
+@layer base {
+	html {
+		font-family: "League Spartan", system-ui, sans-serif;
+	}
+}
+
+.container {
+	@apply max-w-2xl max-md:flex-col max-md:mx-5;
+}
