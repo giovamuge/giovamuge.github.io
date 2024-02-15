@@ -47,10 +47,10 @@ export default function Home() {
 		<>
 			<main>
 				<div className="flex flex-col min-w-full max-w-full items-center justify-center">
-					{/* <!-- container -->  */}
-					<div className="flex flex-col max-w-2xl max-md:px-3 gap-10">
-						<Navbar />
-
+					<Navbar />
+					
+					{/* <!-- Sections -->  */}
+					<div className="flex flex-col max-w-2xl max-md:px-3 gap-36 mb-36">
 						<Intro
 							id="intro"
 							title="Giovanni Mugelli"

@@ -17,8 +17,8 @@ export default function Intro({
 	image,
 }: Props): JSX.Element {
 	return (
-		<div className="flex flex-row gap-5 max-md:flex-col" id={id}>
-			<div className="border-t-primary border-t-8">
+		<section className="flex flex-row gap-5 max-md:flex-col" id={id}>
+			<div className="border-t-primary border-t-8 max-h-screen">
 				<Image
 					src={image}
 					className="object-cover h-full w-auto grayscale"
@@ -38,6 +38,6 @@ export default function Intro({
 					{description}
 				</div>
 			</div>
-		</div>
+		</section>
 	)
 }

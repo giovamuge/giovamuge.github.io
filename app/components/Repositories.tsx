@@ -10,6 +10,7 @@ type RepoResponse = {
 	name: string
 	description: string
 	url: string
+	html_url: string
 	language: string
 	updated_at: Date
 	fork: boolean
@@ -31,7 +32,7 @@ export default function Repositories({ id }: Props): JSX.Element {
 	}, [])
 
 	return (
-		<div className="flex flex-col gap-5" id={id}>
+		<section className="flex flex-col gap-5" id={id}>
 			<h1 className="text-3xl font-bold">Repositories</h1>
 			<ul className="space-y-5">
 				{repos.map((repo, index) => (
@@ -39,7 +40,7 @@ export default function Repositories({ id }: Props): JSX.Element {
 						className="hover:scale-105 transition-all hover:border-primary border-2 border-secondary px-5 py-3 text-secondary hover:text-primary flex flex-col gap-3 text-lg"
 						key={index}
 					>
-						<a className="w-full h-full" href={repo.url}>
+						<a className="w-full h-full" href={repo.html_url}>
 							<div className="flex flex-col gap-2">
 								<label className="font-bold">
 									{repo.name}
@@ -63,6 +64,6 @@ export default function Repositories({ id }: Props): JSX.Element {
 					</li>
 				))}
 			</ul>
-		</div>
+		</section>
 	)
 }

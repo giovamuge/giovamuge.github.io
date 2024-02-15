@@ -24,7 +24,7 @@ export default function Tecnologies({ id }: Props): JSX.Element {
 	}, [])
 
 	return (
-		<div className="flex flex-col gap-5" id={id}>
+		<section className="flex flex-col gap-5" id={id}>
 			{/* <label className="text-3xl font-bold text-center">
 				Tecnologie
 			</label> */}
@@ -44,6 +44,6 @@ export default function Tecnologies({ id }: Props): JSX.Element {
 					/>
 				))}
 			</div>
-		</div>
+		</section>
 	)
 }
