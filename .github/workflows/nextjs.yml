@@ -73,19 +73,21 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Enable Next Telemetry
+        run: ${{ steps.detect-package-manager.outputs.manager }} next telemetry enable
       - name: Build with Next.js
-        run: npm run build
+        run: ${{ steps.detect-package-manager.outputs.manager }} next build
       - name: Dist folder exist
         run: |
-          if [ ! -d "dist" ]; then
-            echo "dist folder does not exist"
+          if [ ! -d "out" ]; then
+            echo "out folder does not exist"
             echo "all folders: $(ls -l)"
             exit 1
           fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./out
 
   # Deployment job
   deploy:
