@@ -79,6 +79,7 @@ jobs:
         run: |
           if [ ! -d "dist" ]; then
             echo "dist folder does not exist"
+            echo "all folders: $(ls -l)"
             exit 1
           fi
       - name: Upload artifact
