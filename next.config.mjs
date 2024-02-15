@@ -10,10 +10,6 @@ const nextConfig = {
 
 	// Optional: Change the output directory `out` -> `dist`
 	distDir: "dist",
-
-	experimental: {
-		appDir: true,
-	},
 }
 
 export default nextConfig
