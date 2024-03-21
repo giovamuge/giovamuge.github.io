@@ -2,6 +2,9 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeContextProvider } from "@/context/ThemeContext"
+import Head from "next/head"
+import Gtag from "./components/Gtag"
+import Script from "next/script"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -43,8 +46,25 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
+			<Head>
+				<Gtag />
+			</Head>
 			<ThemeContextProvider>
-				<body className={inter.className}>{children}</body>
+				<body className={inter.className}>
+					<noscript>
+						<iframe
+							src="https://www.googletagmanager.com/ns.html?id=GTM-MQMVBV4W"
+							height="0"
+							width="0"
+							style={{
+								display: "none",
+								visibility: "hidden",
+							}}
+						></iframe>
+					</noscript>
+
+					{children}
+				</body>
 			</ThemeContextProvider>
 		</html>
 	)
