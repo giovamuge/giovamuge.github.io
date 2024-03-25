@@ -48,6 +48,10 @@ export default function RootLayout({
 		<html lang="en">
 			<Head>
 				<Gtag />
+				<meta
+					name="google-site-verification"
+					content="Ri-3IpOOr9_k3rfFLPZdBpgV_x6VFMsPasUdTGLwKI8"
+				/>
 			</Head>
 			<ThemeContextProvider>
 				<body className={inter.className}>
