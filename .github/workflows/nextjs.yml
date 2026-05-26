@@ -75,6 +75,8 @@ jobs:
               run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
             - name: Build with Next.js
               run: ${{ steps.detect-package-manager.outputs.runner }} next build
+            - name: Export static site
+              run: ${{ steps.detect-package-manager.outputs.runner }} next export
             - name: List current directory
               run: |
                   if [ ! -d "out" ]; then
@@ -83,7 +85,7 @@ jobs:
                     exit 1
                   fi
             - name: Upload artifact
-              uses: actions/upload-pages-artifact@v3
+              uses: actions/upload-pages-artifact@v4
               with:
                   path: ./out
 
