@@ -9,13 +9,13 @@ type Props = Readonly<{
 export default function SocialLink({
 	href,
 	children,
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
 	return (
 		<Link
 			href={href}
 			target="_blank"
 			rel="noreferrer"
-			className="text-[var(--primary-rgb)] flex flex-row gap-2 cursor-pointer align-middle"
+			className="text-(--foreground) flex flex-row gap-2 cursor-pointer align-middle hover:text-(--muted) transition-colors"
 		>
 			{children}
 		</Link>

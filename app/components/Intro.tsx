@@ -1,43 +1,30 @@
+"use client"
+
 import React from "react"
-import Image, { StaticImageData } from "next/image"
+import { useI18n } from "@/context/ThemeContext"
+import ProfileReveal from "./ProfileReveal"
+import profile from "@/assets/profile.jpeg"
 
 type Props = {
 	id?: string
-	title: string
-	subtitle: string
-	description: string
-	image: StaticImageData
 }
 
-export default function Intro({
-	id,
-	title,
-	subtitle,
-	description,
-	image,
-}: Props): JSX.Element {
+export default function Intro({ id }: Props) {
+	const { t } = useI18n()
+
 	return (
-		<section className="flex flex-row gap-5 max-md:flex-col" id={id}>
-			<div className="border-t-primary border-t-8">
-				<Image
-					src={image}
-					className="object-cover h-full w-auto grayscale max-h-screen"
-					alt="Picture of the author"
-					placeholder="blur"
-					priority={true}
-				/>
-			</div>
-			<div className="flex flex-col space-y-5">
-				<div className="text-7xl font-bold font-league-spartan">
-					{title}
-				</div>
-				<div className="text-4xl font-league-spartan">
-					{subtitle}
-				</div>
-				<div className="text-xl font-space-mono">
-					{description}
-				</div>
-			</div>
+		<section id={id} className="flex flex-col gap-5 pt-2">
+			<h1 className="font-display text-5xl md:text-6xl font-bold leading-tight tracking-tight text-(--foreground)">
+				{t.intro.title}
+			</h1>
+			<p className="font-display italic text-xl text-(--muted) leading-snug">
+				{t.intro.subtitle}
+			</p>
+			<hr className="border-(--border)" />
+			<p className="font-serif text-base leading-[1.85] text-(--foreground) max-w-xl">
+				{t.intro.description}
+			</p>
+			<ProfileReveal image={profile} alt="Giovanni Mugelli" />
 		</section>
 	)
 }

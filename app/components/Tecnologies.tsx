@@ -2,45 +2,46 @@
 
 import React, { useEffect, useState } from "react"
 import Image, { StaticImageData } from "next/image"
+import { useI18n } from "@/context/ThemeContext"
 
 type Props = {
 	id?: string
 }
 
-export default function Tecnologies({ id }: Props): JSX.Element {
-	const [techs, setTechs] = useState(Array<StaticImageData>())
+export default function Tecnologies({ id }: Props) {
+	const [techs, setTechs] = useState<StaticImageData[]>([])
+	const { t } = useI18n()
 
 	useEffect(() => {
 		const importAll = async () => {
 			const techs = await import("@/assets/tech")
-			let images: StaticImageData[] = Object.entries(techs).map(
-				(value) => value[1]
-			)
-
+			const images: StaticImageData[] = Object.entries(
+				techs,
+			).map((value) => value[1] as StaticImageData)
 			setTechs(images)
 		}
-
 		importAll()
 	}, [])
 
 	return (
-		<section className="flex flex-col gap-5" id={id}>
-			{/* <label className="text-3xl font-bold text-center">
-				Tecnologie
-			</label> */}
-
-			<p className="text-secondary text-center mb-5">
-				Qui una lista delle tecnologie che ho utilizzato negli
-				anni.
-			</p>
-
-			<div className="flex flex-wrap gap-10 justify-center item-center">
+		<section className="flex flex-col gap-6" id={id}>
+			<div className="border-t border-(--border) pt-6">
+				<h2 className="font-display text-3xl font-bold text-(--foreground) mb-4">
+					{t.technologies.title}
+				</h2>
+				<p className="font-serif text-base leading-[1.85] text-(--muted)">
+					{t.technologies.description}
+				</p>
+			</div>
+			<div className="flex flex-wrap gap-8 items-center justify-start mt-2">
 				{techs.map((tech, index) => (
 					<Image
 						key={index}
 						src={tech}
-						alt="Image Description"
-						className="md:basis-1/5 md:w-10 md:h-10 basis-1/3 w-36 h-36 object-contain grayscale hover:grayscale-0 hover:scale-110 transition-all hover:cursor-pointer"
+						alt="Technology"
+						className="w-8 h-8 object-contain grayscale hover:grayscale-0 transition-all duration-300 cursor-pointer"
+						width={32}
+						height={32}
 					/>
 				))}
 			</div>

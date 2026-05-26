@@ -1,28 +1,60 @@
 "use client"
 
-import { createContext, useContext } from "react"
+import {
+	createContext,
+	useContext,
+	useState,
+	useEffect,
+	type ReactNode,
+} from "react"
+import {
+	type Language,
+	translations,
+	type Translations,
+} from "@/lib/i18n"
 
-type ThemeContextType = {
-	theme: "dark" | "light" | "system"
+type I18nContextType = {
+	lang: Language
+	setLang: (lang: Language) => void
+	t: Translations
 }
 
-const ThemeContext = createContext<ThemeContextType>({
-	theme: "system",
+const I18nContext = createContext<I18nContextType>({
+	lang: "en",
+	setLang: () => {},
+	t: translations.en,
 })
 
-const useAuthContext = () => useContext(ThemeContext)
+export const useI18n = () => useContext(I18nContext)
 
 type Props = {
-	children: React.ReactNode
+	children: ReactNode
 }
 
-const ThemeContextProvider = ({ children }: Props) => {
+export function I18nProvider({ children }: Props) {
+	const [lang, setLangState] = useState<Language>("en")
+
+	useEffect(() => {
+		const stored = localStorage.getItem("lang") as Language | null
+		if (stored === "en" || stored === "it") {
+			setLangState(stored)
+		}
+	}, [])
+
+	const setLang = (newLang: Language) => {
+		setLangState(newLang)
+		localStorage.setItem("lang", newLang)
+	}
+
 	return (
-		<ThemeContext.Provider value={{ theme: "system" }}>
+		<I18nContext.Provider
+			value={{ lang, setLang, t: translations[lang] }}
+		>
 			{children}
-		</ThemeContext.Provider>
+		</I18nContext.Provider>
 	)
 }
 
-export { ThemeContext, useAuthContext, ThemeContextProvider }
-export type { ThemeContextType }
+// Legacy export kept for backwards compat
+export { I18nContext }
+export const ThemeContextProvider = I18nProvider

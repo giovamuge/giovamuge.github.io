@@ -1,40 +1,47 @@
-import Image from "next/image"
+"use client"
+
+import Link from "next/link"
 import { Post } from "@/interfaces/post"
+import { useI18n } from "@/context/ThemeContext"
 
 export default function ProjectCard({
 	title,
-	content,
+	title_it,
+	excerpt,
+	excerpt_it,
 	coverImage,
 	tags,
 	slug,
-}: Post): JSX.Element {
-	return (
-		<div className="flex flex-col max-w-sm border-2 border-secondary hover:border-primary hover:shadow hover:shadow-primary hover:scale-105 transition-all text-secondary hover:text-primary">
-			<Image
-				className="w-full h-48 object-cover"
-				src={coverImage}
-				alt="Image Description"
-				width={200}
-				height={300}
-			/>
+}: Post) {
+	const { t, lang } = useI18n()
 
-			<div className="p-4 md:p-5 gap-2 flex flex-col">
-				<h3 className="text-lg font-bold">{title}</h3>
-				<em className="mt-1">
-					{tags.map((x) => `#${x}`).join(" ")}
-				</em>
-				<p className="font-space-mono">
-					{content
-						.substring(0, 50)
-						.concat(content.length > 50 ? "..." : "")}
+	const displayTitle = lang === "it" && title_it ? title_it : title
+	const displayExcerpt =
+		lang === "it" && excerpt_it ? excerpt_it : excerpt
+
+	return (
+		<article className="flex flex-col gap-3 group">
+			<div className="flex flex-col gap-2">
+				<p className="font-ui text-[10px] tracking-widest uppercase text-(--muted)">
+					{tags.map((x) => x).join(" · ")}
 				</p>
-				<a
-					className="font-bold hover:underline transition-all"
+				<h3 className="font-display text-lg font-bold leading-snug text-(--foreground)">
+					{displayTitle}
+				</h3>
+				<p className="font-serif text-sm leading-relaxed text-(--muted)">
+					{displayExcerpt
+						.substring(0, 120)
+						.concat(
+							displayExcerpt.length > 120 ? "…" : "",
+						)}
+				</p>
+				<Link
+					className="font-ui text-[11px] font-bold tracking-widest text-(--foreground) hover:text-(--muted) transition-colors mt-1"
 					href={`/posts/${slug}`}
 				>
-					Continua a leggere
-				</a>
+					{t.projects.readMore}
+				</Link>
 			</div>
-		</div>
+		</article>
 	)
 }
