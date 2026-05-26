@@ -1,43 +1,64 @@
+"use client"
+
 import { type Author } from "@/interfaces/author"
 import React from "react"
 import { PostTitle } from "./PostTitle"
 import Avatar from "./Avatar"
 import CoverImage from "./CoverImage"
 import DateFormatter from "./DateFormatter"
+import { useI18n } from "@/context/ThemeContext"
 
 type Props = {
 	title: string
-	coverImage: string
+	titleIt?: string
+	excerpt?: string
+	excerptIt?: string
+	coverImage?: string
 	date: string
 	author: Author
 }
 
 export default function PostHeader({
 	title,
+	titleIt,
+	excerpt,
+	excerptIt,
 	coverImage,
 	date,
 	author,
 }: Props) {
+	const { lang } = useI18n()
+	const displayTitle = lang === "it" && titleIt ? titleIt : title
+	const displayExcerpt =
+		lang === "it" && excerptIt ? excerptIt : excerpt
+
 	return (
 		<>
-			<PostTitle>{title}</PostTitle>
-			<div className="hidden md:block md:mb-12">
-				<Avatar name={author.name} picture={author.picture} />
-			</div>
-			<div className="mb-8 md:mb-16 sm:mx-0">
-				<CoverImage title={title} src={coverImage} />
-			</div>
-			<div className="max-w-2xl mx-auto">
-				<div className="block md:hidden mb-6">
+			<div className="max-w-2xl mb-8">
+				<PostTitle>{displayTitle}</PostTitle>
+				<div className="flex items-center gap-4 mb-6">
 					<Avatar
 						name={author.name}
 						picture={author.picture}
 					/>
+					<div className="text-sm text-(--muted)">
+						<DateFormatter dateString={date} />
+					</div>
 				</div>
-				<div className="mb-6 text-lg">
-					<DateFormatter dateString={date} />
-				</div>
+				{displayExcerpt && (
+					<p className="font-serif text-xl leading-[1.85] text-(--muted)">
+						{displayExcerpt}
+					</p>
+				)}
 			</div>
+			{coverImage && (
+				<div className="mb-10 md:mb-16 sm:mx-0 items-center justify-center">
+					<CoverImage
+						title={displayTitle}
+						src={coverImage}
+					/>
+				</div>
+			)}
 		</>
 	)
 }

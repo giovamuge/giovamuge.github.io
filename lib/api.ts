@@ -15,7 +15,17 @@ export function getPostBySlug(slug: string) {
 	const fileContents = fs.readFileSync(fullPath, "utf8")
 	const { data, content } = matter(fileContents)
 
-	return { ...data, slug: realSlug, content } as Post
+	const separator = "\n<!-- LANG_IT -->\n"
+	const parts = content.split(separator)
+	const content_en = parts[0].trim()
+	const content_it = parts[1]?.trim()
+
+	return {
+		...data,
+		slug: realSlug,
+		content: content_en,
+		...(content_it ? { content_it } : {}),
+	} as Post
 }
 
 export function getAllPosts(): Post[] {

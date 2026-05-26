@@ -1,3 +1,5 @@
+import React from "react"
+
 // import socialIcons from "@/public/social-icons.svg"
 
 type Props = {
@@ -12,7 +14,7 @@ export default function SocialIcon({
 	width = 22,
 	height = 16,
 	name,
-}: Props): JSX.Element {
+}: Props): React.ReactElement {
 	return (
 		<svg
 			className={className}

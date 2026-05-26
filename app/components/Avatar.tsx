@@ -13,8 +13,8 @@ const Avatar = ({ name, picture }: Props) => {
 				src={picture}
 				className="w-12 h-12 rounded-full mr-4"
 				alt={name}
-                width={12}
-                height={12}
+				width={12}
+				height={12}
 			/>
 			<div className="text-xl font-bold">{name}</div>
 		</div>

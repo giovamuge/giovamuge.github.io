@@ -2,113 +2,96 @@
 
 import Link from "next/link"
 import React, { useState } from "react"
+import { useI18n } from "@/context/ThemeContext"
 
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false)
+	const { lang, setLang, t } = useI18n()
+
+	const navItems = [
+		{ label: t.nav.about, href: "/#intro" },
+		{ label: t.nav.projects, href: "/#projects" },
+		{ label: t.nav.technologies, href: "/#technologies" },
+		{ label: t.nav.repositories, href: "/#repos" },
+		{ label: t.nav.contact, href: "/#contact" },
+	]
 
 	return (
-		<nav className="w-full max-md:px-3 max-w-2xl mb-10">
-			<div className="max-w-7xl mx-auto">
-				<div className="flex items-center justify-between h-16">
-					<div className="flex-shrink-0">
-						<span className="font-bold">
-							<Link href={"/"}>giovamuge.dev</Link> 
-						</span>
-					</div>
-					<div className="max-sm:hidden flex flex-row">
-						<a
-							href="#intro"
-							className="hover:scale-105 transition-all px-3 py-2 text-sm font-medium"
-						>
-							Intro
-						</a>
-						<a
-							href="#projects"
-							className="  hover:scale-105 transition-all px-3 py-2 text-sm font-medium"
-						>
-							Progetti
-						</a>
-						<a
-							href="#technologies"
-							className="hover:scale-105 transition-all px-3 py-2 text-sm font-medium"
-						>
-							Tecnologie
-						</a>
-						<a
-							href="#repos"
-							className="hover:scale-105 transition-all px-3 py-2 text-sm font-medium"
-						>
-							Repo
-						</a>
-					</div>
-
-					<button
-						className="sm:hidden"
-						aria-controls="mobile-menu"
-						aria-expanded="false"
-						onClick={() => setIsOpen(!isOpen)}
+		<header className="w-full border-b border-(--border) mb-16">
+			<div className="max-w-editorial mx-auto px-4 lg:px-0">
+				{/* Masthead */}
+				<div className="py-7 flex items-center justify-between">
+					<Link
+						href="/"
+						className="font-display text-xl font-bold tracking-tight text-(--foreground)"
 					>
-						<span className="sr-only">
-							Open main menu
-						</span>
-						<svg
-							className="block h-6 w-6"
-							fill="none"
-							viewBox="0 0 24 24"
-							strokeWidth="1.5"
-							stroke="currentColor"
-							aria-hidden="true"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-							/>
-						</svg>
+						{t.nav.home}
+					</Link>
+					<button
+						className="font-ui text-[11px] tracking-widest uppercase text-(--muted) border border-(--border) px-3 py-1 hover:text-(--foreground) hover:border-(--foreground) transition-colors"
+						onClick={() =>
+							setLang(lang === "en" ? "it" : "en")
+						}
+						aria-label="Toggle language"
+					>
+						{lang === "en" ? "IT" : "EN"}
 					</button>
 				</div>
-			</div>
-			<div
-				className={
-					"sm:hidden" && isOpen
-						? "block transition-all"
-						: "hidden"
-				}
-			>
-				<div className="space-y-1 flex flex-col px-2 pb-3 pt-2">
-					<a
-						href="#intro"
-						className="hover:scale-105 transition-all px-3 py-2 text-sm font-medium"
+
+				{/* Desktop nav */}
+				<nav
+					className="hidden sm:flex items-center pb-4"
+					aria-label="Main navigation"
+				>
+					{navItems.map((item, i) => (
+						<React.Fragment key={item.href}>
+							{i > 0 && (
+								<span className="font-ui text-(--muted) text-xs mx-2 select-none">
+									·
+								</span>
+							)}
+							<Link
+								href={item.href}
+								className="font-ui text-[11px] tracking-widest uppercase text-(--muted) hover:text-(--foreground) transition-colors py-1"
+							>
+								{item.label}
+							</Link>
+						</React.Fragment>
+					))}
+				</nav>
+
+				{/* Mobile nav */}
+				<div className="sm:hidden pb-4 flex items-center justify-between">
+					<span className="font-ui text-[11px] tracking-widest uppercase text-(--muted)">
+						Menu
+					</span>
+					<button
+						className="font-ui text-lg text-(--muted) hover:text-(--foreground) transition-colors"
+						onClick={() => setIsOpen(!isOpen)}
+						aria-label={
+							isOpen ? "Close menu" : "Open menu"
+						}
 					>
-						Intro
-					</a>
-					<a
-						href="#projects"
-						className="hover:scale-105 transition-all px-3 py-2 text-sm font-medium"
-					>
-						Progetti
-					</a>
-					<a
-						href="#technologies"
-						className="hover:scale-105 transition-all px-3 py-2 text-sm font-medium"
-					>
-						Tecnologie
-					</a>
-					<a
-						href="#repos"
-						className="hover:scale-105 transition-all px-3 py-2 text-sm font-medium"
-					>
-						Repo
-					</a>
-					<a
-						href="#contact"
-						className="hover:scale-105 transition-all px-3 py-2 text-sm font-medium"
-					>
-						Contatti
-					</a>
+						{isOpen ? "×" : "≡"}
+					</button>
 				</div>
+
+				{isOpen && (
+					<div className="sm:hidden flex flex-col gap-4 pb-6 border-t border-(--border) pt-4">
+						{navItems.map((item) => (
+							<Link
+								key={item.href}
+								href={item.href}
+								className="font-ui text-[11px] tracking-widest uppercase text-(--muted) hover:text-(--foreground) transition-colors"
+								onClick={() => setIsOpen(false)}
+							>
+								{item.label}
+							</Link>
+						))}
+					</div>
+				)}
 			</div>
-		</nav>
+		</header>
 	)
 }
 
