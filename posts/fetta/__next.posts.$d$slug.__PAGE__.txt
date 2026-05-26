@@ -1,0 +1,67 @@
+1:"$Sreact.fragment"
+2:I[55672,["/_next/static/chunks/0v_7dmcrbo3--.js","/_next/static/chunks/0d3shmwh5_nmn.js","/_next/static/chunks/0i4ggxfso680t.js"],"default"]
+3:I[84861,["/_next/static/chunks/0v_7dmcrbo3--.js","/_next/static/chunks/0d3shmwh5_nmn.js","/_next/static/chunks/0i4ggxfso680t.js"],"default"]
+4:I[54965,["/_next/static/chunks/0v_7dmcrbo3--.js","/_next/static/chunks/0d3shmwh5_nmn.js","/_next/static/chunks/0i4ggxfso680t.js"],"default"]
+a:I[97367,["/_next/static/chunks/0v_7dmcrbo3--.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
+b:"$Sreact.suspense"
+:HL["/_next/static/chunks/0_7~y~aqj~_ex.css","style"]
+5:T12c8,<p>Every time a group of friends orders something in bulk — olive oil from a Tuscan cooperative, coffee beans, cured meats — the same conversation happens: how do we split the packages fairly? You cannot cut a 5 kg bag in half. The quantities are fixed, the proportions are always messy, and spreadsheets feel like overkill.</p>
+<p>That friction is what led to <strong>Fetta</strong> — Italian for <em>slice</em>, as in a fair share of something larger.</p>
+<h2>The Problem Is Harder Than It Looks</h2>
+<p>At first glance, this is a straightforward division problem. In practice, it belongs to a family of combinatorial optimization problems closely related to the bin-packing and subset-sum problems, both of which are NP-complete. The packages are indivisible. Each recipient has a target proportion (not a fixed weight). The total allocation must use only whole packages. The goal is to minimise the deviation from the ideal proportions across all recipients simultaneously.</p>
+<p>A naive greedy approach — assign the largest available package to whoever is furthest below their target — fails quickly when the remaining packages create an irreconcilable imbalance. What you need is a solver that can look ahead.</p>
+<h2>A DFS Solver with a Greedy Fallback</h2>
+<p>Fetta's core algorithm is a <strong>depth-first search with backtracking</strong>, modelled as a constraint satisfaction problem. For each package, the solver tries assigning it to each recipient in turn, prunes branches that exceed a recipient's proportional budget, and records the allocation that minimises total absolute error when all packages are exhausted.</p>
+<p>For large inputs where the DFS search space becomes intractable, Fetta switches to a <strong>greedy-with-swaps fallback</strong>: assign packages greedily, then perform pairwise swaps between recipients until no swap improves the total error. The strategy used is reported transparently in the results summary.</p>
+<p>Both algorithms run entirely in the browser — no server, no API, no data leaves the device.</p>
+<h2>The Stack</h2>
+<p>Building Fetta was an opportunity to work with the very latest tooling:</p>
+<ul>
+<li><strong>Next.js 16</strong> with the App Router and full static generation (<code>output: export</code>)</li>
+<li><strong>TypeScript</strong> throughout, with strict mode enabled</li>
+<li><strong>Tailwind CSS v4</strong> — the new engine is noticeably faster and the <code>@theme</code> configuration syntax is a pleasure to work with</li>
+<li><strong>shadcn/ui</strong> built on <code>@base-ui/react</code> for accessible, headless UI primitives</li>
+<li><strong>react-hook-form</strong> with <strong>Zod</strong> schemas for type-safe form validation</li>
+<li><strong>next-themes</strong> for dark / light / system preference support</li>
+</ul>
+<p>The form layer deserves special mention. The input model — packages (weight × quantity pairs) and recipients (name + relative proportion) — is dynamic: rows are added and removed at runtime. Getting react-hook-form's field array API to cooperate with Zod's discriminated union validation took some patience, but the result is a form that validates correctly at every step without a single <code>any</code> cast.</p>
+<h2>Internationalisation from Day One</h2>
+<p>Fetta supports Italian and English out of the box, switchable at runtime without a page reload. The translation architecture mirrors the approach used on this portfolio site: a typed context that reads the user's language preference from <code>localStorage</code>, defaulting to English on the server to avoid hydration mismatches.</p>
+<p>The Italian locale is the default for local use; the English locale makes the app useful to an international audience discovering it via GitHub or Vercel.</p>
+<h2>Deployment</h2>
+<p>The app is deployed on <strong>Vercel</strong> and available at <a href="https://fetta.vercel.app">fetta.vercel.app</a>. Because the entire solver runs client-side and history is persisted in <code>localStorage</code>, the deployment has zero environment variables and zero server infrastructure. It is a pure static application that could be hosted on any CDN.</p>
+<p>The source code is available on <a href="https://github.com/giovamuge/fetta">GitHub</a> under the MIT licence.</p>
+<h2>Reflections</h2>
+<p>Fetta is a small app with a specific purpose, but it forced me to think carefully about algorithm design in a constrained environment, about progressive disclosure in form UX (showing the strategy badge only when the fallback fires), and about the ergonomics of a tool people will use repeatedly — which is why the history panel persists the last 20 calculations with one-click restore.</p>
+<p>Sometimes the most satisfying software is the kind that solves one problem completely.</p>
+6:T10a4,<p>Ogni volta che un gruppo di amici ordina qualcosa all'ingrosso — olio d'oliva da una cooperativa toscana, chicchi di caffè, salumi — nasce la stessa conversazione: come dividiamo i pacchi equamente? Non puoi tagliare a metà un sacco da 5 kg. Le quantità sono fisse, le proporzioni sono sempre irregolari, e i fogli di calcolo sembrano eccessivi.</p>
+<p>Quella frustrazione ha dato vita a <strong>Fetta</strong> — termine italiano per una quota equa di qualcosa di più grande.</p>
+<h2>Il Problema è Più Difficile di Quanto Sembri</h2>
+<p>A prima vista, è un semplice problema di divisione. In pratica, appartiene a una famiglia di problemi di ottimizzazione combinatoria strettamente correlati al bin-packing e al subset-sum, entrambi NP-completi. I pacchi sono indivisibili. Ogni destinatario ha una proporzione obiettivo, non un peso fisso. L'allocazione totale deve usare solo pacchi interi. L'obiettivo è minimizzare la deviazione dalle proporzioni ideali per tutti i destinatari contemporaneamente.</p>
+<p>Un approccio greedy ingenuo — assegna il pacco disponibile più grande a chi è più lontano dal suo obiettivo — fallisce rapidamente quando i pacchi rimanenti creano uno squilibrio irrisolvibile. Serve un algoritmo in grado di guardare avanti.</p>
+<h2>Un Motore DFS con Fallback Greedy</h2>
+<p>L'algoritmo centrale di Fetta è una <strong>ricerca depth-first con backtracking</strong>, modellata come un problema di soddisfacimento dei vincoli. Per ogni pacco, il motore prova ad assegnarlo a ciascun destinatario, pota i rami che superano il budget proporzionale e registra l'allocazione che minimizza l'errore assoluto totale quando tutti i pacchi sono esauriti.</p>
+<p>Per input grandi in cui lo spazio di ricerca DFS diventa intrattabile, Fetta passa a un <strong>fallback greedy con scambi</strong>: assegna i pacchi in modo greedy, poi effettua scambi a coppie tra destinatari finché nessuno scambio migliora l'errore totale. La strategia usata viene riportata trasparentemente nel riepilogo dei risultati.</p>
+<p>Entrambi gli algoritmi girano interamente nel browser — nessun server, nessuna API, nessun dato lascia il dispositivo.</p>
+<h2>Lo Stack Tecnologico</h2>
+<p>La costruzione di Fetta è stata un'opportunità per lavorare con le tecnologie più recenti:</p>
+<ul>
+<li><strong>Next.js 16</strong> con App Router e generazione statica completa (<code>output: export</code>)</li>
+<li><strong>TypeScript</strong> con strict mode abilitato</li>
+<li><strong>Tailwind CSS v4</strong> — il nuovo motore è notevolmente più veloce e la sintassi <code>@theme</code> è un piacere da usare</li>
+<li><strong>shadcn/ui</strong> basato su <code>@base-ui/react</code> per primitive UI accessibili e headless</li>
+<li><strong>react-hook-form</strong> con schemi <strong>Zod</strong> per la validazione type-safe dei form</li>
+</ul>
+<h2>Internazionalizzazione dal Giorno Uno</h2>
+<p>Fetta supporta italiano e inglese, commutabili a runtime senza ricaricare la pagina. L'architettura di traduzione rispecchia l'approccio usato su questo sito portfolio: un contesto tipizzato che legge la preferenza linguistica dell'utente da <code>localStorage</code>, con default inglese lato server per evitare disallineamenti di idratazione.</p>
+<h2>Deployment</h2>
+<p>L'app è deployata su <strong>Vercel</strong> ed è disponibile su <a href="https://fetta.vercel.app">fetta.vercel.app</a>. Poiché l'intero motore gira lato client e la cronologia è persistita in <code>localStorage</code>, il deployment non ha variabili d'ambiente né infrastruttura server. È una pura applicazione statica ospitabile su qualsiasi CDN.</p>
+<p>Il codice sorgente è disponibile su <a href="https://github.com/giovamuge/fetta">GitHub</a> con licenza MIT.</p>
+<h2>Riflessioni</h2>
+<p>Fetta è una piccola app con uno scopo preciso, ma mi ha costretto a riflettere attentamente sulla progettazione degli algoritmi in un ambiente vincolato, sulla progressive disclosure nella UX dei form, e sull'ergonomia di uno strumento che le persone useranno più volte — ecco perché il pannello cronologia persiste le ultime 20 calcoli con ripristino in un clic.</p>
+<p>A volte il software più soddisfacente è quello che risolve un problema completamente.</p>
+0:{"rsc":["$","$1","c",{"children":[[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"Article\",\"headline\":\"Fetta: Splitting Packages Fairly with a DFS Algorithm and Next.js 16\",\"description\":\"Fetta solves a deceptively simple problem: how do you divide a set of fixed-size packages among several people as fairly as possible? Built with Next.js 16, Tailwind CSS v4, and a custom depth-first search solver.\",\"image\":\"https://giovamuge.github.io/social.jpg\",\"datePublished\":\"2026-03-10T10:00:00.000Z\",\"dateModified\":\"2026-03-10T10:00:00.000Z\",\"url\":\"https://giovamuge.github.io/posts/fetta\",\"author\":{\"@type\":\"Person\",\"@id\":\"https://giovamuge.github.io/#person\",\"name\":\"Giovanni Mugelli\",\"url\":\"https://giovamuge.github.io\"},\"publisher\":{\"@type\":\"Person\",\"@id\":\"https://giovamuge.github.io/#person\",\"name\":\"Giovanni Mugelli\"},\"mainEntityOfPage\":{\"@type\":\"WebPage\",\"@id\":\"https://giovamuge.github.io/posts/fetta\"},\"keywords\":\"nextjs, typescript, algorithms, tailwind, web\"}"}}],["$","main",null,{"children":["$","div",null,{"className":"max-w-editorial mx-auto px-4 lg:px-0 flex flex-col items-center justify-center","children":[["$","$L2",null,{}],["$","article",null,{"className":"mb-32","children":[["$","$L3",null,{"title":"Fetta: Splitting Packages Fairly with a DFS Algorithm and Next.js 16","titleIt":"Fetta: Dividere Pacchi Equamente con un Algoritmo DFS e Next.js 16","excerpt":"Fetta solves a deceptively simple problem: how do you divide a set of fixed-size packages among several people as fairly as possible? Built with Next.js 16, Tailwind CSS v4, and a custom depth-first search solver.","excerptIt":"Fetta risolve un problema apparentemente semplice: come dividere un insieme di pacchi di dimensioni fisse tra più persone nel modo più equo possibile? Realizzato con Next.js 16, Tailwind CSS v4 e un motore di ricerca depth-first personalizzato.","coverImage":"/blog/fetta/cover.jpg","date":"2026-03-10T10:00:00.000Z","author":{"name":"Giovanni Mugelli","picture":"/blog/authors/giovamuge.jpeg"}}],["$","$L4",null,{"en":"$5","it":"$6"}]]}]]}]}]],["$L7","$L8"],"$L9"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"WaJHWp7NmCrwSOuk2upzD"}
+7:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0_7~y~aqj~_ex.css","precedence":"next"}]
+8:["$","script","script-0",{"src":"/_next/static/chunks/0i4ggxfso680t.js","async":true}]
+9:["$","$La",null,{"children":["$","$b",null,{"name":"Next.MetadataOutlet","children":"$@c"}]}]
+c:null

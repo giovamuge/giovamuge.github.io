@@ -1,5 +1,4 @@
-# www.robotstxt.org/
+User-Agent: *
+Allow: /
 
-# Allow crawling of all content
-User-agent: *
-Disallow:
+Sitemap: https://giovamuge.github.io/sitemap.xml
